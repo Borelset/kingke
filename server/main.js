@@ -115,14 +115,16 @@ Meteor.startup(() => {
     var code = this.params.query.code;
     var openid = getinfoJS.getopenid(code);
     var name = getinfoJS.getname(openid);
-    var courselist = courseJS.mycourse(name);
+    var s_courselist = courseJS.mycourse(name);
+    console.log(s_courselist);
 
-    SSR.compileTemplate('allcourse', Assets.getText('allcourse.html'));
-    Template.allcourse.helpers({
-      courselist: courselist
+    SSR.compileTemplate('mycourse', Assets.getText('mycourse.html'));
+    Template.mycourse.helpers({
+      s_courselist: s_courselist
     });
-    var html = SSR.render('allcourse');
+    var html = SSR.render('mycourse');
     res.end(html);
+
   }, {where: 'server'});
 
   Router.route('/course/:_cname', function () {
