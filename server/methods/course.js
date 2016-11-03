@@ -29,3 +29,7 @@ exports.add_course = function(popenid, cid) {
     Course.insert(pc_rel);
     return 0;
 }
+
+exports.search_course = function(cname) {
+    return Course.findone({name : cname});
+}

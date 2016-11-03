@@ -118,12 +118,11 @@ Meteor.startup(() => {
     
   }, {where: 'server'});
 
-  Router.route('/course/:_cid', function () {
+  Router.route('/course/:_cname', function () {
     var req = this.request;
     var res = this.response;
-    var cid = this.params._cid;
-    var course_include = courseJS.course_include(cid);
-    var target_course = courseJS.search_course(cid);
+    var cname = this.params._cname;
+    var target_course = courseJS.search_course(cname);
 
     SSR.compileTemplate('course', Assets.getText('course.html'));
     Template.course.helpers({
