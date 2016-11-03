@@ -5,15 +5,9 @@ var collection = require("../../collection/collection.js");
 var QR = collection.qr;
 var Course = collection.course;
 
-exports.getqr = function(cname) {
-    console.log(cname);
-    var sel = Course.findOne({name : cname});
-    if(sel != undefined){
-        var cid = sel.cid;
-        return QR.findOne({cid : cid});
-    }
-    console.log('not found');
-    return undefined;
+exports.getqr = function(cid) {
+    console.log(cid);
+    return QR.findOne({cid : cid});
 }
 
 exports.createqr = function(cid) {
