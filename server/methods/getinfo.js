@@ -36,3 +36,7 @@ exports.getopenid = function(code) {
     var oauth2_data = JSON.parse(oauth2_result.content);
     return oauth2_data.openid;
 }
+
+exports.person_info = function(pid) {
+    return Info.findone({_id : pid});
+}
