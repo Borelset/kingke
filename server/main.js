@@ -12,11 +12,25 @@ var Student = collection.student;
 Meteor.startup(() => {
   // code to run on server at startup
   if (Meteor.isServer) {
-    Router.prototype.configureBodyParsers = function () {
-        Router.onBeforeAction(Iron.Router.bodyParser.json());
-        Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
+    // 修改iron:router,以满足xml请求
+    Router.configureBodyParsers = function() {
+      Router.onBeforeAction(Iron.Router.bodyParser.json());
+      Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
+      // Enable incoming XML requests for creditReferral route
+      Router.onBeforeAction(
+        Iron.Router.bodyParser.raw({
+          type: '*/*',
+          verify: function(req, res, body) {
+            req.rawBody = body.toString();
+          }
+        }),
+        {
+          only: ['weixin'],
+          where: 'server'
+        }
+      );
     };
-  }
+  };
     
   Router.route('/', {where: 'server'})
     .get(function() {
@@ -43,7 +57,7 @@ Meteor.startup(() => {
     .post(function() {
         var req = this.request;
         var res = this.response;
-        console.log(req.body);
+        console.log(req.rawBody);
         res.end("test");
     });
 
