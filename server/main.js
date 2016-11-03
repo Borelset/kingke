@@ -123,6 +123,15 @@ Meteor.startup(() => {
     var res = this.response;
     var cid = this.params._cid;
     var course_include = courseJS.course_include(cid);
+    var target_course = courseJS.search_course(cid);
+
+    SSR.compileTemplate('course', Assets.getText('course.html'));
+    Template.course.helpers({
+      name : target_course.name,
+      teacher_name : target_course.teacher_name
+    });
+    var html = SSR.render('course');
+    res.end(html);
 
   }, {where: 'server'});
 
