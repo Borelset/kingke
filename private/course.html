@@ -8,5 +8,14 @@
         <h2>任课老师:{{teacher_name}}</h2>
         <a href="{{addurl}}">选择该课程</a>
         <h3>学生列表:</h3>
+        {{#each studentlist}}
+        <a class="weui-cell weui-cell_access" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Fcourse%2F{{name}}&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect">
+            <div class="weui-cell__bd">
+                <p>{{sname}}</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        {{/each}}
     </body>
 </html>
