@@ -7,8 +7,11 @@ var Course = collection.course;
 
 exports.getqr = function(cname) {
     var sel = Course.findOne({cname : cname});
-    var cid = sel.cid;
-    return QR.findOne({cid : cid});
+    if(sel != undefined){
+        var cid = sel.cid;
+        return QR.findOne({cid : cid});
+    }
+    return undefined;
 }
 
 exports.createqr = function(cid) {
