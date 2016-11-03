@@ -59,16 +59,18 @@ Meteor.startup(() => {
       var userinfo_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + access_token + "&openid=" + openid;
       var userinfo_result = HTTP.get(userinfo_url);
       var userinfo_data = JSON.parse(userinfo_result.content);
-
-      var user_info = {};
-      user_info.openid = openid;
-      user_info.country = userinfo_data.country;
-      user_info.province = userinfo_data.province;
-      user_info.city = userinfo_data.city;
-      user_info.nickname = userinfo_data.nickname;
-      user_info.headimgurl = userinfo_data.headimgurl;
       
-      Info.insert(user_info);
+      if(!Info.findOne(openid : openid))
+      {
+        var user_info = {};
+        user_info.openid = openid;
+        user_info.country = userinfo_data.country;
+        user_info.province = userinfo_data.province;
+        user_info.city = userinfo_data.city;
+        user_info.nickname = userinfo_data.nickname;
+        user_info.headimgurl = userinfo_data.headimgurl;
+        Info.insert(user_info);
+      };
 
       SSR.compileTemplate('info', Assets.getText('info.html'));
       Template.info.helpers({
@@ -83,5 +85,9 @@ Meteor.startup(() => {
     } catch (err) {
       console.log("network error " + err);
     }
+  }, {where: 'server'});
+  
+  Router.route('/allcourse', function () {
+    
   }, {where: 'server'});
 });
