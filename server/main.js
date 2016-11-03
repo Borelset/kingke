@@ -155,10 +155,16 @@ Meteor.startup(() => {
     Router.route('/cc_submit', function () {
     var req = this.request;
     var res = this.response;
+    var code = this.params.query.code;
+    var openid = getinfoJS.getopenid(code);
+    var this_tname = getinfoJS.getname(openid);
 
     var cname = req.body.cname;
     var tname = req.body.tname;
-    var openid = req.body.openid;
+    if(!tname){
+      tmame = this_tname;
+    }
+    var openid = openid;
     courseJS.create_course(cname, tname, openid);
     res.end('success');
   }, {where: 'server'});
