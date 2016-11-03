@@ -119,7 +119,7 @@ Meteor.startup(() => {
 
     SSR.compileTemplate('mycourse', Assets.getText('mycourse.html'));
     Template.mycourse.helpers({
-      courselist: s_courselist
+      s_courselist: s_courselist
     });
     var html = SSR.render('mycourse');
     res.end(html);
