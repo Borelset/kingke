@@ -31,5 +31,5 @@ exports.add_course = function(popenid, cid) {
 }
 
 exports.search_course = function(cname) {
-    return Course.findone({name : cname});
+    return Course.findOne({name : cname});
 }
