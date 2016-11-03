@@ -99,7 +99,7 @@ Meteor.startup(() => {
     var courselist = courseJS.allcourse();
 
     SSR.compileTemplate('allcourse', Assets.getText('allcourse.html'));
-    Template.course.helpers({
+    Template.allcourse.helpers({
       courselist: courselist
     });
     var html = SSR.render('callourse');
