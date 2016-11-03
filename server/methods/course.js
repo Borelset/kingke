@@ -1,13 +1,16 @@
 var collection = require("../../collection/collection.js");
 var Course = collection.course;
 var Info = collection.info;
+var Student = collection.student;
 
 exports.allcourse = function() {
     return Course.find().fetch();
 }
 
 exports.mycourse = function(openid) {
-    return Course.find({openid : openid}).fetch();
+    var per = Info.findOne({openid : openid});
+    var name = per.nickname;
+    return Student.find({sname : name}).fetch();
 }
 
 exports.course_include = function(cid)  {
@@ -16,8 +19,7 @@ exports.course_include = function(cid)  {
 
 exports.create_course = function(cid, cname, tname, openid) {
     var course_info = {};
-    var scid = cid.toString();
-    course_info.cid = scid;
+    course_info.cid = cid;
     course_info.name = cname;
     course_info.teacher_name = tname;
     course_info.teacher_id = openid;
