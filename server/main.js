@@ -97,10 +97,17 @@ Meteor.startup(() => {
 
     var getinfo_result = getinfoJS.getinfo(code);
     var courselist = courseJS.allcourse();
+
+    SSR.compileTemplate('allcourse', Assets.getText('allcourse.html'));
+    Template.course.helpers({
+      courselist: courselist
+    });
+    var html = SSR.render('callourse');
+    res.end(html);
     
   }, {where: 'server'});
   
-    Router.route('/mycourse', function () {
+  Router.route('/mycourse', function () {
     var req = this.request;
     var res = this.response;
     var code = this.params.query.code;
@@ -110,4 +117,22 @@ Meteor.startup(() => {
     var courselist = courseJS.mycourse(openid);
     
   }, {where: 'server'});
+
+  Router.route('/course/:_cid', function () {
+    var req = this.request;
+    var res = this.response;
+    var cid = this.params._cid;
+    var course_include = courseJS.course_include(cid);
+
+  }, {where: 'server'});
+
+    Router.route('/person_info/:_pid', function () {
+    var req = this.request;
+    var res = this.response;
+    var pid = this.params._pid;
+    var pinfo = getinfoJS.person_info(pid);
+
+  }, {where: 'server'});
+
+
 });

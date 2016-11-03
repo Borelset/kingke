@@ -13,3 +13,11 @@ exports.mycourse = function(openid) {
 exports.course_include = function(cid)  {
     return Course.find({_id : cid}).fetch();
 }
+
+exports.addcourse = function(cname, openid) {
+    var course_info = {};
+    var name = cname;
+    var teacher = openid;
+    Course.insert(course_info);
+    return 0;
+}
