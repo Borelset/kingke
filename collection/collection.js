@@ -1,7 +1,7 @@
-experts.user = new Mongo.Collection("user");
+exports.user = new Mongo.Collection("user");
 
-experts.info = new Mongo.Collection("info");
+exports.info = new Mongo.Collection("info");
 
-experts.course = new Mongo.Collection("course");
+exports.course = new Mongo.Collection("course");
 
-experts.student = new Mongo.Collection("student");
+exports.student = new Mongo.Collection("student");
