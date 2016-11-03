@@ -115,7 +115,7 @@ Meteor.startup(() => {
     var code = this.params.query.code;
     var openid = getinfoJS.getopenid(code);
     var name = getinfoJS.getname(openid);
-    var s_courselist = courseJS.mycourse(name);
+    var courselist = courseJS.mycourse(name);
 
     SSR.compileTemplate('allcourse', Assets.getText('allcourse.html'));
     Template.allcourse.helpers({

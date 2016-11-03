@@ -6,7 +6,6 @@ var QR = collection.qr;
 var Course = collection.course;
 
 exports.getqr = function(cid) {
-    console.log(cid);
     return QR.findOne({cid : cid});
 }
 
