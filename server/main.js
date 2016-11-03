@@ -2,7 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 var config = require("./config.js");
 var collection = require("../collection/collection.js");
+var getinfoJS = require("./methods/getinfo.js");
+var allcourseJS = require("./methods/allcourse.js");
 var Info = collection.info;
+var Course = collection.course;
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -37,7 +40,7 @@ Meteor.startup(() => {
       var token_result = HTTP.get(token_url);
       var access_token = token_result.data.access_token;
       var menu_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + access_token;
-      var menu_data = '{"button":[{"type":"view", "name" : "查看个人信息","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Finfo&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{"name" : "课程","sub_button" :[{"type":"view","name" : "所有课程","url" :"https://wx.borelset.com/"},{"type":"view","name" : "我的课程","url" : "https://wx.borelset.com/"}]}]}';
+      var menu_data = '{"button":[{"type":"view", "name" : "查看个人信息","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Finfo&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{"name" : "课程","sub_button" :[{"type":"view","name" : "所有课程","url" :"https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Fallcourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{"type":"view","name" : "我的课程","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Fmycourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"}]}]}';
       var menu_result = HTTP.post(menu_url, {content: menu_data});
       res.end("set success" + menu_result.content);
     } catch (err) {
@@ -88,6 +91,12 @@ Meteor.startup(() => {
   }, {where: 'server'});
   
   Router.route('/allcourse', function () {
+    var req = this.request;
+    var res = this.response;
+    var code = this.params.query.code;
+
+    var getinfo_result = getinfoJS.getinfo(code);
+    var courselist = allcourseJS.allcourse();
     
   }, {where: 'server'});
 });
