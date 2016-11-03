@@ -37,6 +37,7 @@ Meteor.startup(() => {
     }
     })
     .post(function() {
+        Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
         var req = this.request;
         var res = this.response;
         console.log(req.body);
