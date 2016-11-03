@@ -138,9 +138,13 @@ Meteor.startup(() => {
     var req = this.request;
     var res = this.response;
     var code = this.params.query.code;
+    console.log('get code:');
+    console.log(code);
     var getinfo_result = getinfoJS.getinfo(code);
     var openid = getinfoJS.getopenid(code);
+    console.log(openid);
     var tname = getinfoJS.getname(openid);
+    console.log(tname);
 
     SSR.compileTemplate('createcourse', Assets.getText('createcourse.html'));
     Template.createcourse.helpers({
@@ -161,12 +165,14 @@ Meteor.startup(() => {
 
     var cname = req.body.cname;
     var tname = req.body.tname;
-    if(!tname){
-      tmame = this_tname;
-    }
     var openid = openid;
-    courseJS.create_course(cname, tname, openid);
-    res.end('success');
+    if(courseJS.search_course(cname)) {
+      res.end('already exist a course with a same name!');
+    }
+    else{
+      courseJS.create_course(cname, tname, openid);
+      res.end('success');
+    }
   }, {where: 'server'});
 
     Router.route('/person_info/:_pid', function () {
