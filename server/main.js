@@ -131,14 +131,15 @@ Meteor.startup(() => {
     var cname = this.params._cname;
     var target_course = courseJS.search_course(cname);
     var addurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Faddcourse%2F" + cname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"
-
+    var qrurl = qrJS.getqr(cname);
     var studentlist = Student.find({cname : cname}).fetch();
     SSR.compileTemplate('course', Assets.getText('course.html'));
     Template.course.helpers({
       name : target_course.name,
       teacher_name : target_course.teacher_name,
       addurl : addurl,
-      studentlist : studentlist
+      studentlist : studentlist,
+      qrurl : qrurl
     });
     var html = SSR.render('course');
     res.end(html);
@@ -195,11 +196,15 @@ Meteor.startup(() => {
     var cname = req.body.cname;
     var tname = req.body.tname;
     var openid = openid;
+
+    var cid = courseJS.num_course();
+
     if(courseJS.search_course(cname)) {
       res.end('already exist a course with a same name!');
     }
     else{
-      courseJS.create_course(cname, tname, openid);
+      courseJS.create_course(cid, cname, tname, openid);
+      qrJS.createqr(cid);
       res.end('完成');
     }
   }, {where: 'server'});

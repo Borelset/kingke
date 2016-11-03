@@ -34,3 +34,7 @@ exports.add_course = function(popenid, cid) {
 exports.search_course = function(cname) {
     return Course.findOne({name : cname});
 }
+
+exports.num_course = function() {
+    return Course.find().count();
+}
