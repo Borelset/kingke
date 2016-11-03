@@ -11,8 +11,11 @@ var Student = collection.student;
 
 Meteor.startup(() => {
   // code to run on server at startup
-  Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
-  
+  if (Meteor.isServer) {
+      Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({
+          extended: false
+     }));
+   }
     
   Router.route('/', {where: 'server'})
     .get(function() {
