@@ -2,12 +2,12 @@ import { HTTP } from 'meteor/http';
 
 var config = require("../config.js");
 var collection = require("../../collection/collection.js");
-var courseJS = require("./course.js");
 var QR = collection.qr;
 var Course = collection.course;
 
 exports.getqr = function(cname) {
-    var sel = courseJS.search_course(cname);
+    console.log(cname);
+    var sel = Course.findOne({name : cname});
     if(sel != undefined){
         var cid = sel.cid;
         return QR.findOne({cid : cid});
