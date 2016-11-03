@@ -102,7 +102,7 @@ Meteor.startup(() => {
     Template.allcourse.helpers({
       courselist: courselist
     });
-    var html = SSR.render('callourse');
+    var html = SSR.render('allourse');
     res.end(html);
     
   }, {where: 'server'});
