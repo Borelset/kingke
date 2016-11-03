@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 var config = require("./config.js");
 var collection = require("../collection/collection.js");
-var User = collection.user;
 var Info = collection.info;
 
 Meteor.startup(() => {
@@ -61,7 +60,15 @@ Meteor.startup(() => {
       var userinfo_result = HTTP.get(userinfo_url);
       var userinfo_data = JSON.parse(userinfo_result.content);
 
+      var user_info = {};
+      user_info.openid = openid;
+      user_info.country = userinfo_data.country;
+      user_info.province = userinfo_data.province;
+      user_info.city = userinfo_data.city;
+      user_info.nickname = userinfo_data.nickname;
+      user_info.headimgurl = userinfo_data.headimgurl;
       
+      Info.insert(User_info);
 
       SSR.compileTemplate('info', Assets.getText('info.html'));
       Template.info.helpers({
