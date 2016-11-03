@@ -60,7 +60,7 @@ Meteor.startup(() => {
       var userinfo_result = HTTP.get(userinfo_url);
       var userinfo_data = JSON.parse(userinfo_result.content);
       
-      if(!Info.findOne(openid : openid))
+      if(!Info.findOne({openid : openid}))
       {
         var user_info = {};
         user_info.openid = openid;
