@@ -38,7 +38,7 @@ exports.getopenid = function(code) {
 }
 
 exports.person_info = function(name) {
-    return Info.findOne({name : name});
+    return Info.findOne({nickname : name});
 }
 
 exports.getname = function(popenid) {
