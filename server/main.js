@@ -106,7 +106,8 @@ Meteor.startup(() => {
     var code = this.params.query.code;
 
     var getinfo_result = getinfoJS.getinfo(code);
-    var courselist = courseJS.mycourse();
+    var openid = getinfoJS.getopenid(code);
+    var courselist = courseJS.mycourse(openid);
     
   }, {where: 'server'});
 });
