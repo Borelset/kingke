@@ -140,7 +140,7 @@ Meteor.startup(() => {
     var code = this.params.query.code;
     console.log('get code:');
     console.log(code);
-    var getinfo_result = getinfoJS.getinfo(code);
+    //var getinfo_result = getinfoJS.getinfo(code);
     var openid = getinfoJS.getopenid(code);
     console.log(openid);
     var tname = getinfoJS.getname(openid);
