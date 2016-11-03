@@ -23,7 +23,7 @@ exports.createqr = function(cid) {
     post_cont = JSON.stringify(post_cont);
     var post_result = HTTP.post(ticket_gen_url, {content : post_cont});
     var result_obj = JSON.parse(post_result.content);
-    var qrcodeImg = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' + encodeURIComponent(qrcodeJson.ticket);
+    var qrcodeImg = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' + encodeURIComponent(result_obj.ticket);
     var qrc_rel = {};
     qrc_rel.cid = cid;
     qrc_rel.url = qrcodeImg;
