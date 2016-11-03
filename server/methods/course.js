@@ -17,7 +17,7 @@ exports.course_include = function(cid)  {
 exports.create_course = function(cname, tname, openid) {
     var course_info = {};
     course_info.name = cname;
-    coutse_info.teacher_name = tname;
+    course_info.teacher_name = tname;
     course_info.teacher_id = openid;
     Course.insert(course_info);
     return 0;
