@@ -5,5 +5,13 @@
     </head>
     <body>
         {{#each courselist}}
+        <a class="weui-cell weui-cell_access" href="/course_info_student/{{_id}}">
+            <div class="weui-cell__bd">
+                <p>{{name}}</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        {{/each}}
     </body>
 </html>
