@@ -68,7 +68,7 @@ Meteor.startup(() => {
       user_info.nickname = userinfo_data.nickname;
       user_info.headimgurl = userinfo_data.headimgurl;
       
-      Info.insert(User_info);
+      Info.insert(user_info);
 
       SSR.compileTemplate('info', Assets.getText('info.html'));
       Template.info.helpers({
