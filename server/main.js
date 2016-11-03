@@ -113,17 +113,13 @@ Meteor.startup(() => {
     var req = this.request;
     var res = this.response;
     var code = this.params.query.code;
-    console.log(code);
     var openid = getinfoJS.getopenid(code);
-    console.log(openid);
     var name = getinfoJS.getname(openid);
-    console.log(name);
-    var courselist = courseJS.mycourse(name);
-    console.log(courselist);
+    var s_courselist = courseJS.mycourse(name);
 
     SSR.compileTemplate('mycourse', Assets.getText('mycourse.html'));
     Template.mycourse.helpers({
-      courselist: courselist
+      courselist: s_courselist
     });
     var html = SSR.render('mycourse');
     res.end(html);
