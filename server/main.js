@@ -3,7 +3,7 @@ import { HTTP } from 'meteor/http';
 var config = require("./config.js");
 var collection = require("../collection/collection.js");
 var getinfoJS = require("./methods/getinfo.js");
-var allcourseJS = require("./methods/allcourse.js");
+var courseJS = require("./methods/course.js");
 var Info = collection.info;
 var Course = collection.course;
 
@@ -96,7 +96,17 @@ Meteor.startup(() => {
     var code = this.params.query.code;
 
     var getinfo_result = getinfoJS.getinfo(code);
-    var courselist = allcourseJS.allcourse();
+    var courselist = courseJS.allcourse();
+    
+  }, {where: 'server'});
+  
+    Router.route('/mycourse', function () {
+    var req = this.request;
+    var res = this.response;
+    var code = this.params.query.code;
+
+    var getinfo_result = getinfoJS.getinfo(code);
+    var courselist = courseJS.mycourse();
     
   }, {where: 'server'});
 });
