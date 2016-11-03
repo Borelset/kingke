@@ -11,17 +11,15 @@ exports.getqr = function(cname) {
         var cid = sel.cid;
         return QR.findOne({cid : cid});
     }
+    console.log('not found');
     return undefined;
 }
 
 exports.createqr = function(cid) {
     var url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + config.appID + "&secret=" + config.appsecret;
     var token_result = HTTP.get(url);
-    console.log(token_result);
     var token_obj = JSON.parse(token_result.content);
-    console.log(token_obj);
     var acc_token = token_obj.access_token;
-    console.log(acc_token);
     var ticket_gen_url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=" + acc_token;
     var post_cont = {"expire_seconds": 2592000, "action_name": "QR_SCENE", "action_info": {"scene": {"scene_id": cid }}};
     post_cont = JSON.stringify(post_cont);
