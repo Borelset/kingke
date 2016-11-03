@@ -7,19 +7,14 @@ exports.allcourse = function() {
     return Course.find().fetch();
 }
 
-exports.mycourse = function(openid) {
-    var per = Info.findOne({openid : openid});
-    var name = per.nickname;
+exports.mycourse = function(name) {
     return Student.find({sname : name}).fetch();
 }
 
-exports.course_include = function(cid)  {
-    return Course.find({_id : cid}).fetch();
-}
 
 exports.create_course = function(cid, cname, tname, openid) {
     var course_info = {};
-    course_info.cid = cid;
+    course_info.cid = cid.toString();
     course_info.name = cname;
     course_info.teacher_name = tname;
     course_info.teacher_id = openid;
