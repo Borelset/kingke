@@ -205,7 +205,7 @@ Meteor.startup(() => {
     var pinfo = getinfoJS.person_info(name);
 
     SSR.compileTemplate('person_info', Assets.getText('person_info.html'));
-    Template.info.helpers({
+    Template.person_info.helpers({
         country: pinfo.country,
         province: pinfo.province,
         city: pinfo.city,
