@@ -5,12 +5,12 @@ var collection = require("../../collection/collection.js");
 var QR = collection.qr;
 var Course = collection.course;
 
-var getqr = function(cname) {
+exports.getqr = function(cname) {
     var cid = Course.findOne({cname : cname}).cid;
     return QR.findOne({cid : cid});
 }
 
-var createqr = function(cid) {
+exports.createqr = function(cid) {
     var url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + config.appID + "&secret=" + config.appsecret;
     var token_result = HTTP.get(url);
     var token_obj = JSON.parse(token_result.content);
