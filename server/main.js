@@ -132,7 +132,7 @@ Meteor.startup(() => {
     var cname = this.params._cname;
     var target_course = courseJS.search_course(cname);
     var addurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Faddcourse%2F" + cname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"
-    var course_cid = targrt_course.cid;
+    var course_cid = target_course.cid;
     var qrurl = qrJS.getqr(cid);
     var studentlist = Student.find({cname : cname}).fetch();
     SSR.compileTemplate('course', Assets.getText('course.html'));
