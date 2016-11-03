@@ -1,4 +1,4 @@
-var collection = require("../collection/collection.js");
+var collection = require("../../collection/collection.js");
 var Course = collection.course;
 var Info = collection.info;
 

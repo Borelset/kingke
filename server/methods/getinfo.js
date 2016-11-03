@@ -1,7 +1,7 @@
 import { HTTP } from 'meteor/http';
 
 var config = require("../config.js");
-var collection = require("../collection/collection.js");
+var collection = require("../../collection/collection.js");
 var Info = collection.info;
 
 exports.getinfo = function(code){
