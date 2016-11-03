@@ -16,7 +16,8 @@ exports.course_include = function(cid)  {
 
 exports.create_course = function(cid, cname, tname, openid) {
     var course_info = {};
-    course_info.cid = cid;
+    var scid = cid.toString();
+    course_info.cid = scid;
     course_info.name = cname;
     course_info.teacher_name = tname;
     course_info.teacher_id = openid;
