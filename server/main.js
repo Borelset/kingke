@@ -11,7 +11,7 @@ var Student = collection.student;
 
 Meteor.startup(() => {
   // code to run on server at startup
-
+  Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
   
     
   Router.route('/', {where: 'server'})
@@ -37,7 +37,6 @@ Meteor.startup(() => {
     }
     })
     .post(function() {
-        Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
         var req = this.request;
         var res = this.response;
         console.log(req.body);
