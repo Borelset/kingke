@@ -37,8 +37,8 @@ exports.getopenid = function(code) {
     return oauth2_data.openid;
 }
 
-exports.person_info = function(pid) {
-    return Info.findOne({_id : pid});
+exports.person_info = function(name) {
+    return Info.findOne({name : name});
 }
 
 exports.getname = function(popenid) {
