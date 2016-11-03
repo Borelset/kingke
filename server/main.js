@@ -40,7 +40,7 @@ Meteor.startup(() => {
       var token_result = HTTP.get(token_url);
       var access_token = token_result.data.access_token;
       var menu_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + access_token;
-      var menu_data = '{"button":[{"type":"view","name" : "查看个人信息","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Finfo&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{"type":"view","name" : "添加课程","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Faddcourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{ "name" : "课程","sub_button" : [{"type":"view","name" : "所有课程","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Fallcourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{ "type":"view","name" : "我的课程","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Fmycourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"}]}]}';
+      var menu_data = '{"button":[{"type":"view","name" : "查看个人信息","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Finfo&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{"type":"view","name" : "创建课程","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Fcreatecourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{ "name" : "课程","sub_button" : [{"type":"view","name" : "所有课程","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Fallcourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"},{ "type":"view","name" : "我的课程","url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appID + '&redirect_uri=http%3A%2F%2F' + config.url + '%2Fmycourse&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"}]}]}';
       var menu_result = HTTP.post(menu_url, {content: menu_data});
       res.end("set success" + menu_result.content);
     } catch (err) {
@@ -132,6 +132,35 @@ Meteor.startup(() => {
     var html = SSR.render('course');
     res.end(html);
 
+  }, {where: 'server'});
+
+    Router.route('/createcourse', function () {
+    var req = this.request;
+    var res = this.response;
+    var code = this.params.query.code;
+    var getinfo_result = getinfoJS.getinfo(code);
+    var openid = getinfoJS.getopenid(code);
+    var tname = getinfoJS.getname(openid);
+
+    SSR.compileTemplate('createcourse', Assets.getText('createcourse'));
+    Template.createcourse.helpers({
+      tname : tname,
+      openid : openid
+    });
+    var html = SSR.render('createcourse');
+    res.end(html);
+  
+  }, {where: 'server'});
+
+    Router.route('/cc_submit', function () {
+    var req = this.request;
+    var res = this.response;
+
+    var cname = req.body.cname;
+    var tname = req.body.tname;
+    var openid = req.body.openid;
+    courseJS.create_course(cname, tname, openid);
+    res.end('success');
   }, {where: 'server'});
 
     Router.route('/person_info/:_pid', function () {

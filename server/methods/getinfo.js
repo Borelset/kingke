@@ -38,5 +38,10 @@ exports.getopenid = function(code) {
 }
 
 exports.person_info = function(pid) {
-    return Info.findone({_id : pid});
+    return Info.findOne({_id : pid});
+}
+
+exports.getname = function(popenid) {
+    var selper = Info.findOne({openid : popenid});
+    return selper.nickname;
 }

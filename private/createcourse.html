@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>kingke</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+</head>
+<body>
+  <form action="/cc_submit" method="post" id="cc_submit">
+    <div class="weui-cells__title">课程名称</div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" name="cname" placeholder="请输入课程名称" />
+        </div>
+      </div>
+    </div>
+    <div class="weui-cells__title">教师名称</div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" name="tname" value="{{tname}}" />
+        </div>
+      </div>
+    </div>
+    <div class="weui-cells__title">教师openid</div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" name="openid" value="{{openid}}" />
+        </div>
+      </div>
+    </div>
+    <div class="weui-btn-area">
+      <a href="javascript:document.getElementById('cc_submit').submit();" class="weui-btn weui-btn_primary">创建课程</a>
+    </div>
+  </form>
+</body>
+</html>
