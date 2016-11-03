@@ -6,7 +6,8 @@ var QR = collection.qr;
 var Course = collection.course;
 
 exports.getqr = function(cname) {
-    var cid = Course.findOne({cname : cname}).cid;
+    var sel = Course.findOne({cname : cname});
+    var cid = sel.cid;
     return QR.findOne({cid : cid});
 }
 
