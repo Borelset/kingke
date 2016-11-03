@@ -191,6 +191,7 @@ Meteor.startup(() => {
     var res = this.response;
     var code = this.params.query.code;
     var openid = getinfoJS.getopenid(code);
+    console.log(openid);
     var this_tname = getinfoJS.getname(openid);
 
     var cname = req.body.cname;
