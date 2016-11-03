@@ -6,6 +6,7 @@ var getinfoJS = require("./methods/getinfo.js");
 var courseJS = require("./methods/course.js");
 var Info = collection.info;
 var Course = collection.course;
+var Student = collection.student;
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -123,11 +124,13 @@ Meteor.startup(() => {
     var res = this.response;
     var cname = this.params._cname;
     var target_course = courseJS.search_course(cname);
+    var addurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Faddcourse%2F" + cname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"
 
     SSR.compileTemplate('course', Assets.getText('course.html'));
     Template.course.helpers({
       name : target_course.name,
-      teacher_name : target_course.teacher_name
+      teacher_name : target_course.teacher_name,
+      addurl : addurl
     });
     var html = SSR.render('course');
     res.end(html);
@@ -152,6 +155,28 @@ Meteor.startup(() => {
   
   }, {where: 'server'});
 
+      Router.route('/addcourse/:_cname', function () {
+    var req = this.request;
+    var res = this.response;
+    var cname = this.params._cname;
+    var code = this.params.query.code;
+    var openid = getinfoJS.getopenid(code);
+    var tname = getinfoJS.getname(openid);
+
+    if(Student.findOne({cname : cname, openid : openid}))
+    {
+      res.end('你已经有这个课了');
+    }
+    else{
+      var sc_rel = {};
+      sc_rel.cname = cname;
+      sc_rel.openid = openid;
+      Student.insert(sc_rel);
+      res.end('完成');
+    }
+  
+  }, {where: 'server'});
+
     Router.route('/cc_submit', function () {
     var req = this.request;
     var res = this.response;
@@ -167,7 +192,7 @@ Meteor.startup(() => {
     }
     else{
       courseJS.create_course(cname, tname, openid);
-      res.end('success');
+      res.end('完成');
     }
   }, {where: 'server'});
 

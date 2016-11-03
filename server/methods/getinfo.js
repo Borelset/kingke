@@ -33,7 +33,6 @@ exports.getinfo = function(code){
 exports.getopenid = function(code) {
     var oauth2_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + config.appID + '&secret=' + config.appsecret + '&code=' + code + '&grant_type=authorization_code';
     var oauth2_result = HTTP.get(oauth2_url);
-    console.log(oauth2_result);
     var oauth2_data = JSON.parse(oauth2_result.content);
     return oauth2_data.openid;
 }
