@@ -164,7 +164,7 @@ Meteor.startup(() => {
   
   }, {where: 'server'});
 
-      Router.route('/addcourse/:_cname', function () {
+    Router.route('/addcourse/:_cname', function () {
     var req = this.request;
     var res = this.response;
     var cname = this.params._cname;
@@ -189,11 +189,6 @@ Meteor.startup(() => {
     Router.route('/cc_submit', function () {
     var req = this.request;
     var res = this.response;
-    var code = this.params.query.code;
-    console.log(code);
-    var openid = getinfoJS.getopenid(code);
-    console.log(openid);
-    var this_tname = getinfoJS.getname(openid);
 
     var cname = req.body.cname;
     var tname = req.body.tname;
