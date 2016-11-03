@@ -4,6 +4,7 @@ var config = require("./config.js");
 var collection = require("../collection/collection.js");
 var getinfoJS = require("./methods/getinfo.js");
 var courseJS = require("./methods/course.js");
+var qrJS = require("./methods/qr.js");
 var Info = collection.info;
 var Course = collection.course;
 var Student = collection.student;
