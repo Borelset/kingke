@@ -16,21 +16,8 @@ Meteor.startup(() => {
     Router.configureBodyParsers = function() {
       Router.onBeforeAction(Iron.Router.bodyParser.json());
       Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
-      // Enable incoming XML requests for creditReferral route
-      Router.onBeforeAction(
-        Iron.Router.bodyParser.raw({
-          type: '*/*',
-          verify: function(req, res, body) {
-            req.rawBody = body.toString();
-          }
-        }),
-        {
-          only: ['/'],
-          where: 'server'
-        }
-      );
     };
-  }
+  };
     
   Router.route('/', {where: 'server'})
     .get(function() {
@@ -61,8 +48,8 @@ Meteor.startup(() => {
         var res = this.response;
         var req_body = req.body;
         var body_s = req_body.toString();
-        var result = xml2js.parseStringSync(body_s);
         console.log(body_s);
+        var result = xml2js.parseStringSync(body_s);
         res.end("test");
     });
 
