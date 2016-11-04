@@ -12,7 +12,6 @@ var Student = collection.student;
 Meteor.startup(() => {
 
   if (Meteor.isServer) {
-    // 修改iron:router,以满足xml请求
     Router.configureBodyParsers = function() {
       Router.onBeforeAction(Iron.Router.bodyParser.json());
       Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
@@ -49,7 +48,6 @@ Meteor.startup(() => {
         var req_body = req.body;
         var body_s = req_body.toString();
         console.log(body_s);
-        var result = xml2js.parseStringSync(body_s);
         res.end("test");
     });
 
