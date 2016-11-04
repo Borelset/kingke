@@ -20,6 +20,7 @@ Meteor.startup(() => {
     .get(function() {
         var req = this.request;
         var res = this.response;
+        console.log(req);
         var signature = this.params.query.signature;
         var timestamp = this.params.query.timestamp;
         var nonce = this.params.query.nonce;
@@ -41,8 +42,7 @@ Meteor.startup(() => {
     .post(function() {
         var req = this.request;
         var res = this.response;
-        var req_str = req.toString();
-        console.dir(req_str);
+        console.dir(req.dir);
         res.end("test");
     });
 
