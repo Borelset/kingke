@@ -30,8 +30,6 @@ Meteor.startup(() => {
         }
       );
     };
-    var setMenuResponse = wxService.setMenu();
-    console.log(setMenuResponse);
   }
     
   Router.route('/', {where: 'server'})
@@ -61,8 +59,7 @@ Meteor.startup(() => {
     .post(function() {
         var req = this.request;
         var res = this.response;
-        var result = xml2js.parseStringSync(req.rawBody);
-        console.log(result);
+        console.log(this);
         res.end("test");
     });
 
