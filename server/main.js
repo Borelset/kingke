@@ -11,10 +11,25 @@ var Student = collection.student;
 
 Meteor.startup(() => {
 
-  Router.prototype.configureBodyParsers = function () {
-    Router.onBeforeAction(Iron.Router.bodyParser.json());
-    Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
-  };
+  if (Meteor.isServer) {
+    // 修改iron:router,以满足xml请求
+    Router.configureBodyParsers = function() {
+      Router.onBeforeAction(Iron.Router.bodyParser.json());
+      Router.onBeforeAction(Iron.Router.bodyParser.urlencoded({extended: false}));
+      // Enable incoming XML requests for creditReferral route
+      Router.onBeforeAction(
+        Iron.Router.bodyParser.raw({
+          type: '*/*',
+          verify: function(req, res, body) {
+            req.rawBody = body.toString();
+          }
+        }),
+        {
+          only: ['/'],
+          where: 'server'
+        }
+      );
+    };
     
   Router.route('/', {where: 'server'})
     .get(function() {
@@ -33,16 +48,18 @@ Meteor.startup(() => {
         var original = l.join('');
         var sha = CryptoJS.SHA1(original).toString();
         if (signature == sha) {
-        res.end(echostr);
-    } 
-    else {
-        res.end("false");
+          res.end(echostr);
+        } 
+        else {
+          res.end("false");
+        }
     }
-    })
+  )
     .post(function() {
         var req = this.request;
         var res = this.response;
-        console.table(req);
+        var result = xml2js.parseStringSync(req.rawBody);
+        console.log(result);
         res.end("test");
     });
 
