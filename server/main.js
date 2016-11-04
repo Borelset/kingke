@@ -30,6 +30,7 @@ Meteor.startup(() => {
         }
       );
     };
+  }
     
   Router.route('/', {where: 'server'})
     .get(function() {
