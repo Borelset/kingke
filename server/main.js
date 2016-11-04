@@ -30,6 +30,8 @@ Meteor.startup(() => {
         }
       );
     };
+    var setMenuResponse = wxService.setMenu();
+    console.log(setMenuResponse);
   }
     
   Router.route('/', {where: 'server'})
