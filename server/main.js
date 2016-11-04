@@ -41,7 +41,7 @@ Meteor.startup(() => {
     .post(function() {
         var req = this.request;
         var res = this.response;
-        console.dir(req);
+        console.dir(req.data);
         res.end("test");
     });
 
