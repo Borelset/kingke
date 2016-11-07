@@ -4,6 +4,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 </head>
 
+<script type="text/javascript">
+function sendMessage(fname) {
+    var collection = require('../collection/collection.js');
+    var Messages = collection.message;
+    var name = fname;
+    var message = document.getElementById('message');
+    if (message.value !== '') {
+        Messages.insert({
+        name: name,
+        message: message.value,
+        time: Date.now(),
+    });
+    document.getElementById('message').value = '';
+    message.value = '';
+    }
+    };
+</script>
+
 <body style="background-color: #f8f8f8;">
     <div class="weui-cells__title">聊天室</div>
     <div class="weui-cells weui-cells_form">
@@ -15,7 +33,7 @@
                 <input class="weui-input" id="message" type="text">
             </div>
             <div class="weui-cell__ft">
-                <a href="javascript:sendMessage({{mname}}) = var collection = require("../collection/collection.js");var Messages = collection.message;var name = fname;var message = document.getElementById('message');if (message.value !== '') {Messages.insert({name: name,message: message.value,time: Date.now()});document.getElementById('message').value = '';message.value = '';}" class="weui-vcode-btn">发送</a>
+                <a href="javascript:sendMessage({{mname}})" class="weui-vcode-btn">发送</a>
             </div>
         </div>
     </div>
