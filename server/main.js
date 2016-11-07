@@ -26,7 +26,6 @@ Meteor.startup(() => {
     .get(function() {
         var req = this.request;
         var res = this.response;
-        console.log(req);
         var signature = this.params.query.signature;
         var timestamp = this.params.query.timestamp;
         var nonce = this.params.query.nonce;
@@ -102,6 +101,7 @@ Meteor.startup(() => {
       };
 
       var t_info = getinfoJS.person_info(mname);
+      console.log(t_info);
       var qr_url = t_info.qr;
 
       SSR.compileTemplate('info', Assets.getText('info.html'));
