@@ -6,10 +6,12 @@ var getinfoJS = require("./methods/getinfo.js");
 var courseJS = require("./methods/course.js");
 var qrJS = require("./methods/qr.js");
 var friendJS = require("./methods/friend.js");
+var userqrJS = require("./methods/userqr.js");
 var Info = collection.info;
 var Course = collection.course;
 var Student = collection.student;
 var Friend = collection.friend;
+var Userqr = collection.userqr;
 
 Meteor.startup(() => {
 
@@ -86,16 +88,21 @@ Meteor.startup(() => {
       
       if(!Info.findOne({openid : openid}))
       {
+        var uid = getinfoJS.num_user();
         var user_info = {};
-        user_info.uid = getinfoJS.num_user();
+        user_info.uid = uid;
         user_info.openid = openid;
         user_info.country = userinfo_data.country;
         user_info.province = userinfo_data.province;
         user_info.city = userinfo_data.city;
         user_info.nickname = userinfo_data.nickname;
         user_info.headimgurl = userinfo_data.headimgurl;
+        user_info.qr = userqrJS.createqr(uid);
         Info.insert(user_info);
       };
+
+      var t_info = getinfoJS.person_info(mname);
+      var qr_url = t_info.qr;
 
       SSR.compileTemplate('info', Assets.getText('info.html'));
       Template.info.helpers({
@@ -104,6 +111,7 @@ Meteor.startup(() => {
         city: userinfo_data.city,
         nickname: userinfo_data.nickname,
         headimgurl: userinfo_data.headimgurl,
+        qr_url: qr_url,
         friendlist: friendlist
       });
       var html = SSR.render("info");

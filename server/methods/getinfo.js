@@ -17,14 +17,16 @@ exports.getinfo = function(code){
 
     if(!Info.findOne({openid : openid}))
       {
+        var uid = getinfoJS.num_user();
         var user_info = {};
-        user_info.uid = Info.find().count();
+        user_info.uid = uid;
         user_info.openid = openid;
         user_info.country = userinfo_data.country;
         user_info.province = userinfo_data.province;
         user_info.city = userinfo_data.city;
         user_info.nickname = userinfo_data.nickname;
         user_info.headimgurl = userinfo_data.headimgurl;
+        user_info.qr = userqrJS.createqr(uid);
         Info.insert(user_info);
       };
       
