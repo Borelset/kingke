@@ -9,3 +9,7 @@ exports.qr = new Mongo.Collection("qr");
 exports.friend = new Mongo.Collection("friend");
 
 exports.userqr = new Mongo.Collection("userqr");
+
+exports.message = new Mongo.Collection("message");
+
+exports.chatter = new Mongo.Collection("chatter");
