@@ -2,7 +2,7 @@ var collection = require("../collection/collection.js");
 var Messages = collection.message;
 var Chatter = collection.chatter;
 
-exports.sendMessage = function(fname) {
+sendMessage = function(fname) {
   var name = fname;
   var message = document.getElementById('message');
   if (message.value !== '') {
