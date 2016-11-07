@@ -87,7 +87,7 @@ Meteor.startup(() => {
       if(!Info.findOne({openid : openid}))
       {
         var user_info = {};
-        user_info.uid = infoJS.num_user();
+        user_info.uid = getinfoJS.num_user();
         user_info.openid = openid;
         user_info.country = userinfo_data.country;
         user_info.province = userinfo_data.province;
