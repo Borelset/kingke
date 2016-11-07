@@ -18,6 +18,7 @@ exports.getinfo = function(code){
     if(!Info.findOne({openid : openid}))
       {
         var user_info = {};
+        user_info.uid = Info.find().count();
         user_info.openid = openid;
         user_info.country = userinfo_data.country;
         user_info.province = userinfo_data.province;
@@ -44,4 +45,8 @@ exports.person_info = function(name) {
 exports.getname = function(popenid) {
     var selper = Info.findOne({openid : popenid});
     return selper.nickname;
+}
+
+exports.num_user = function() {
+    return Info.find().count();
 }
