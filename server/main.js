@@ -314,29 +314,14 @@ Meteor.startup(() => {
     var openid = getinfoJS.getopenid(code);
     var mname = getinfoJS.getname(openid);
 
-    sendMessage = function() {
-      var name = '陌生人';
-      var message = document.getElementById('message');
-      if (message.value !== '') {
-        Messages.insert({
-        name: name,
-        message: message.value,
-        time: Date.now(),
-      });
-
-      document.getElementById('message').value = '';
-      message.value = '';
-      }
-    };
-
     SSR.compileTemplate('chat', Assets.getText('chat.html'));
     Template.chat.helpers({
       mname : mname,
       messages : function() {
         return Messages.find({}, { sort: { time: -1 } });
       },
-      sendMessage : function() {
-      var name = '陌生人';
+      sendMessage : function(fname) {
+      var name = fname;
       var message = document.getElementById('message');
       if (message.value !== '') {
         Messages.insert({
