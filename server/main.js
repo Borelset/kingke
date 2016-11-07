@@ -319,7 +319,21 @@ Meteor.startup(() => {
       mname : mname,
       messages : function() {
         return Messages.find({}, { sort: { time: -1 } });
-      }
+      },
+      sendMessage : function(fname) {
+                      var name = fname;
+                      var message = document.getElementById('message');
+                      if (message.value !== '') {
+                        Messages.insert({
+                        name: name,
+                        message: message.value,
+                        time: Date.now(),
+                      });
+                      document.getElementById('message').value = '';
+                      message.value = '';
+                      }
+                    }
+
 });
     var html = SSR.render('chat');
     res.end(html);
