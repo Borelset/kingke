@@ -236,7 +236,7 @@ Meteor.startup(() => {
     var mname = getinfoJS.getname(openid);
     var tname = name;
 
-    if(friendJS.ensure_friend == 0)
+    if(friendJS.ensure_friend(mname, tname) == 0)
     {
       var str_mode = "加为好友";
       var mode_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Faddfriend%2F" + tname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect";
