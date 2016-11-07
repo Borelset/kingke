@@ -5,9 +5,11 @@ var collection = require("../collection/collection.js");
 var getinfoJS = require("./methods/getinfo.js");
 var courseJS = require("./methods/course.js");
 var qrJS = require("./methods/qr.js");
+var friendJS = require("./methods/friend.js");
 var Info = collection.info;
 var Course = collection.course;
 var Student = collection.student;
+var Friend = collection.friend;
 
 Meteor.startup(() => {
 
@@ -148,7 +150,7 @@ Meteor.startup(() => {
     var res = this.response;
     var cname = this.params._cname;
     var target_course = courseJS.search_course(cname);
-    var addurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Faddcourse%2F" + cname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect"
+    var addurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Faddcourse%2F" + cname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect";
     var course_cid = target_course.cid;
     var qr_d = qrJS.getqr(course_cid);
     var qrurl = qr_d.url;
@@ -232,17 +234,66 @@ Meteor.startup(() => {
     var name = this.params._name;
     var pinfo = getinfoJS.person_info(name);
 
+    var code = this.params.query.code;
+    var openid = getinfoJS.getopenid(code);
+    var mname = getinfoJS.getname(openid);
+    var tname = name;
+
+    if(friendJS.ensure_friend == 0)
+    {
+      var str_mode = "加为好友";
+      var mode_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Faddfriend%2F" + tname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect";
+    }
+    else
+    {
+      var str_mode = "删除好友";
+      var mode_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Fdelfriend%2F" + tname + "&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect";
+    }
+
     SSR.compileTemplate('person_info', Assets.getText('person_info.html'));
     Template.person_info.helpers({
         country: pinfo.country,
         province: pinfo.province,
         city: pinfo.city,
         nickname: pinfo.nickname,
-        headimgurl: pinfo.headimgurl
+        headimgurl: pinfo.headimgurl,
+        str_mode : str_mode,
+        mode_url : mode_url
     });
     var html = SSR.render("person_info");
     res.end(html);
 
+  }, {where: 'server'});
+
+  Router.route('/addfriend/:_name', function () {
+    var req = this.request;
+    var res = this.response;
+    var tname = this.params._name;
+
+    var code = this.params.query.code;
+    var openid = getinfoJS.getopenid(code);
+    var mname = getinfoJS.getname(openid);
+
+    var mt_rel = {};
+    mt_rel.tname = tname;
+    mt_rel.mname = mname;
+    Friend.insert(mt_rel);
+    res.end('成功加为好友');
+
+  }, {where: 'server'});
+
+    Router.route('/delfriend/:_name', function () {
+    var req = this.request;
+    var res = this.response;
+    var tname = this.params._name;
+
+    var code = this.params.query.code;
+    var openid = getinfoJS.getopenid(code);
+    var mname = getinfoJS.getname(openid);
+
+    Friend.remove({mname : mname, tname : tname});
+    res.end('成功加为好友');
+    
   }, {where: 'server'});
 
 

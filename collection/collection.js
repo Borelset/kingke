@@ -5,3 +5,5 @@ exports.course = new Mongo.Collection("course");
 exports.student = new Mongo.Collection("student");
 
 exports.qr = new Mongo.Collection("qr");
+
+exports.friend = new Mongo.Collection("friend");
