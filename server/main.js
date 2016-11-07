@@ -12,6 +12,8 @@ var Course = collection.course;
 var Student = collection.student;
 var Friend = collection.friend;
 var Userqr = collection.userqr;
+var Messages = collection.message;
+var Chatter = collection.chatter;
 
 Meteor.startup(() => {
 
@@ -300,9 +302,59 @@ Meteor.startup(() => {
     var mname = getinfoJS.getname(openid);
 
     Friend.remove({mname : mname, tname : tname});
-    res.end('成功加为好友');
+    res.end('成功删除好友');
     
   }, {where: 'server'});
 
+  Router.route('/chat', function () {
+    var req = this.request;
+    var res = this.response;
+
+    var code = this.params.query.code;
+    var openid = getinfoJS.getopenid(code);
+    var mname = getinfoJS.getname(openid);
+
+    sendMessage = function() {
+      var name = '陌生人';
+      var message = document.getElementById('message');
+      if (message.value !== '') {
+        Messages.insert({
+        name: name,
+        message: message.value,
+        time: Date.now(),
+      });
+
+      document.getElementById('message').value = '';
+      message.value = '';
+      }
+    };
+
+    SSR.compileTemplate('chat', Assets.getText('chat.html'));
+    Template.chat.helpers({
+      mname : mname,
+      messages : function() {
+        return Messages.find({}, { sort: { time: -1 } });
+      },
+      sendMessage : function() {
+      var name = '陌生人';
+      var message = document.getElementById('message');
+      if (message.value !== '') {
+        Messages.insert({
+        name: name,
+        message: message.value,
+        time: Date.now(),
+      });
+
+      document.getElementById('message').value = '';
+      message.value = '';
+      }
+      }
+});
+    var html = SSR.render('chat');
+    res.end(html);
+
+
+
+  }, {where: 'server'});
 
 });
