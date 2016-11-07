@@ -5,7 +5,7 @@ var collection = require("../../collection/collection.js");
 var Userqr = collection.userqr;
 
 exports.getqr = function(uid) {
-    return QR.findOne({uid : uid});
+    return Userqr.findOne({uid : uid});
 }
 
 exports.createqr = function(uid) {
