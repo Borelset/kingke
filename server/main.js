@@ -81,8 +81,8 @@ Meteor.startup(() => {
       var userinfo_result = HTTP.get(userinfo_url);
       var userinfo_data = JSON.parse(userinfo_result.content);
 
-      var mname = getinfoJS.getname(openid);
-      var friendlist = Friend.find({mname : mname});
+      var mname = userinfo_data.nickname;
+      var friendlist = Friend.find({mname : mname}).fetch();
       
       if(!Info.findOne({openid : openid}))
       {
