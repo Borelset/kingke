@@ -321,6 +321,8 @@ Meteor.startup(() => {
         return Messages.find({}, { sort: { time: -1 } });
       },
       sendMessage : function(fname) {
+      console.log('enter sendmessage')
+      console.log(fname);
       var name = fname;
       var message = document.getElementById('message');
       if (message.value !== '') {
