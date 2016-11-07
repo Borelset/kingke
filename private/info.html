@@ -6,5 +6,14 @@
 <body>
 <h1>来自 {{country}} {{province}} {{city}} 的 {{nickname}} 您好</h1>
 <img src="{{headimgurl}}">
+        {{#each friendlist}}
+        <a class="weui-cell weui-cell_access" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx02ddd7bde50636da&redirect_uri=http%3A%2F%2Fwx.borelset.cn%2Fperson_info%2F{{tname}}&response_type=code&scope=snsapi_userinfo&state=lc#wechat_redirect">
+            <div class="weui-cell__bd">
+                <p>{{tname}}</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        {{/each}}
 </body>
 </html>

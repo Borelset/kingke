@@ -80,6 +80,9 @@ Meteor.startup(() => {
       var userinfo_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + access_token + "&openid=" + openid;
       var userinfo_result = HTTP.get(userinfo_url);
       var userinfo_data = JSON.parse(userinfo_result.content);
+
+      var mname = getinfoJS.getname(openid);
+      var friendlist = Friend.find({mname : mname});
       
       if(!Info.findOne({openid : openid}))
       {
@@ -99,7 +102,8 @@ Meteor.startup(() => {
         province: userinfo_data.province,
         city: userinfo_data.city,
         nickname: userinfo_data.nickname,
-        headimgurl: userinfo_data.headimgurl
+        headimgurl: userinfo_data.headimgurl,
+        friendlist: friendlist
       });
       var html = SSR.render("info");
       res.end(html);
