@@ -4,25 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 </head>
 
-<script type="text/javascript">
-function sendMessage(fname) {
-    var collection = require('../collection/collection.js');
-    var Messages = collection.message;
-    var name = fname;
-    var message = document.getElementById('message');
-    if (message.value !== '') {
-        Messages.insert({
-        name: name,
-        message: message.value,
-        time: Date.now(),
-    });
-    document.getElementById('message').value = '';
-    message.value = '';
-    }
-    };
-</script>
-
 <body style="background-color: #f8f8f8;">
+    <script src="./chat.js"></script>
     <div class="weui-cells__title">聊天室</div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell weui-cell_vcode">
