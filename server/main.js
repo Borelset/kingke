@@ -71,7 +71,7 @@ Meteor.startup(() => {
     var req = this.request;
     var code = this.params.query.code;
     var res = this.response;
-    try {
+
       var oauth2_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + config.appID + '&secret=' + config.appsecret + '&code=' + code + '&grant_type=authorization_code';
       var oauth2_result = HTTP.get(oauth2_url);
       var oauth2_data = JSON.parse(oauth2_result.content);
@@ -116,9 +116,7 @@ Meteor.startup(() => {
       });
       var html = SSR.render("info");
       res.end(html);
-    } catch (err) {
-      console.log("network error " + err);
-    }
+      
   }, {where: 'server'});
   
   Router.route('/allcourse', function () {
