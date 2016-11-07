@@ -4,6 +4,10 @@ var getinfoJS = require('../server/methods/getinfo.js');
 var Message = collection.message;
 var Chatter = collection.chatter;
 
+Router.route('/', function() {
+  this.render('Home');
+});
+
 Router.route('/chat', function () {
 
   var req = this.request;
