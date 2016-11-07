@@ -22,6 +22,6 @@ exports.createqr = function(uid) {
     var qru_rel = {};
     qru_rel.uid = uid.toString();
     qru_rel.url = qrcodeImg;
-    QR.insert(qru_rel);
+    Userqr.insert(qru_rel);
     return qrcodeImg;
 }
