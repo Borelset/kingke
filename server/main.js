@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
-import './chat.html';
+import './main.html';
 var config = require("./config.js");
 var collection = require("../collection/collection.js");
 var getinfoJS = require("./methods/getinfo.js");
