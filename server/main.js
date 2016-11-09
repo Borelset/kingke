@@ -305,55 +305,5 @@ Meteor.startup(() => {
     res.end('成功删除好友');
     
   }, {where: 'server'});
-
-  Router.route('/chat', {where: 'server'})
-    .get( function () {
-      var req = this.request;
-      var res = this.response;
-
-      var code = this.params.query.code;
-      var openid = getinfoJS.getopenid(code);
-      var mname = getinfoJS.getname(openid);
-
-      SSR.compileTemplate('chat', Assets.getText('chat.html'));
-      Template.chat.helpers({
-        mname : mname,
-        messages : function() {
-          return Messages.find({}, { sort: { time: -1 } });
-        },
-        sendMessage : function(fname) {
-                      var name = fname;
-                      var message = document.getElementById('message');
-                      if (message.value !== '') {
-                        Messages.insert({
-                        name: name,
-                        message: message.value,
-                        time: Date.now(),
-                      });
-                      document.getElementById('message').value = '';
-                      message.value = '';
-                      }
-                    }
-
-      });
-    var html = SSR.render('chat');
-    res.end(html);
-  })
-
-  .post( function () {
-    var req = this.request;
-    var res = this.response;
-    var mname = req.body.mname;
-    var message = req.body.message;
-    if (message.value !== '') 
-    {
-      Messages.insert({
-        name: name,
-        message: message.value,
-        time: Date.now()
-      });
-    }
-  })
-
   
 });
