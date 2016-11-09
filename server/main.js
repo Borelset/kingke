@@ -31,14 +31,12 @@ Meteor.startup(() => {
           }
         }),
         {
-          only: ['weixin'],
+          only: ['/weixin'],
           where: 'server'
         }
       );
     };
-    // 自动设置meteor菜单
-    var setMenuResponse = wxService.setMenu();
-    console.log(setMenuResponse);
+    
   }
     
   Router.route('/', {where: 'server'})
