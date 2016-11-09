@@ -6,7 +6,19 @@
 </head>
 
 <body style="background-color: #f8f8f8;">
-    <script type=text/javascript src="chat.js"></script> 
+    <script>
+        function sendMassage(message, mname)
+        {
+            var myform = document.createElement("form");
+            myForm.method = "post";
+            myForm.action = to;
+            myform.message = message;
+            myform.mname = mname;
+            document.body.appendChild(myForm);
+            myForm.submit();
+            document.body.removeChild(myForm);
+        }
+    </script> 
     <div class="weui-cells__title">聊天室</div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell weui-cell_vcode">
@@ -17,7 +29,7 @@
                 <input class="weui-input" id="message" type="text">
             </div>
             <div class="weui-cell__ft">
-                <a href="javascript:sendMessage({{mname}})" class="weui-vcode-btn">发送</a>
+                <a href="javascript:sendMessage(document.getElementById('message').value, {{mname}})" class="weui-vcode-btn">发送</a>
             </div>
         </div>
     </div>
